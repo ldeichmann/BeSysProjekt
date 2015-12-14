@@ -6,8 +6,11 @@ einbindung core.c:94
 
 
 memory.c .h
+
 Mlist.c .h
+
 Queue einflechten
+
 kompaktierung
 
 
