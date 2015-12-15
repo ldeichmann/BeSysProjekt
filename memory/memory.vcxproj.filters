@@ -33,6 +33,12 @@
     <ClInclude Include="loader.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="m_list.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="process_queue.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.c">
