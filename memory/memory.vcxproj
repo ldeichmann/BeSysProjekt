@@ -91,6 +91,7 @@
     <ClCompile Include="loader.c" />
     <ClCompile Include="log.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="m_list.c" />
     <ClCompile Include="process_queue.c" />
   </ItemGroup>
   <ItemGroup>

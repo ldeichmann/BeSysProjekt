@@ -6,10 +6,12 @@ Implementation von mList to manage Memory in SimOS
 #define __M_LIST__
 
 #include "bs_types.h"
+#include "globals.h"
+#define FREE_PID MAX_PID+1
 
 
 typedef enum{
-	free, used
+	mfree, used
 }mType;
 
 typedef struct{
@@ -18,7 +20,6 @@ typedef struct{
 	int start;
 	int length;
 	mListNode* next;
-
 }mListNode;
 
 typedef struct{
@@ -49,6 +50,6 @@ mListNode merge(mListNode* a, mListNode* b);
 //merges all adjactend free Nodes in mList
 void mergeAll(mList* list);
 
-
+mListNode* findNextFit(mList* list, int length);
 
 #endif /*__M_LIST__*/

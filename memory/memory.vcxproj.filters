@@ -59,6 +59,9 @@
     <ClCompile Include="process_queue.c">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="m_list.c">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="processes.txt" />
