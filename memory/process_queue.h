@@ -9,14 +9,14 @@ PROCESS_QUEUE struct incl. Nodes for managing Process that dont fit into Memory 
 
 //QueueNode
 typedef struct{
-	PCB_t content;
-	processQueueNode next;
+	PCB_t* content;
+	processQueueNode* next;
 }processQueueNode;
 
 //Process Queue
 typedef struct{
-	processQueueNode head;
-	processQueueNode tail;
+	processQueueNode* head;
+	processQueueNode* tail;
 	int length;
 }processQueue;
 
@@ -29,13 +29,13 @@ processQueueNode* makeProcessQueueNode();
 processQueue* makeProcessQueue();
 
 //Adds new Item to the Queue
-void enqueue(processQueue queue, PCB_t process);
+void enqueue(processQueue* queue, PCB_t* process);
 
 //removes and returns Item from Queue
-PCB_t dequeue(processQueue queue);
+PCB_t* dequeue(processQueue* queue);
 
 //returns true if queue is Empty
-Boolean isEmpty(processQueue queue);
+Boolean isEmpty(processQueue* queue); 
 
 
 #endif /*__PROCESS_QUEUE__*/

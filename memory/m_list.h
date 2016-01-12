@@ -17,11 +17,12 @@ typedef struct{
 	unsigned pid;
 	int start;
 	int length;
-	mListNode head;
+	mListNode* next;
+
 }mListNode;
 
 typedef struct{
-	mListNode head;
+	mListNode* head;
 	int length;
 }mList;
 
@@ -34,19 +35,19 @@ mListNode* makeMListNode();
 mList* makeMList();
 
 //adds Process to list returns false if not enough space; returns true if item was added
-Boolean addProcess(mList list, PCB_t process);
+Boolean addProcess(mList* list, PCB_t* process);
 
 //removes Process from List
-void removeProvess(mList list, PCB_t process);
+void removeProvess(mList* list, PCB_t* process);
 
 //compacts list
-void compact(mList list);
+void compact(mList* list);
 
 //merges two free Nodes into one
-mListNode merge(mListNode a, mListNode b);
+mListNode merge(mListNode* a, mListNode* b);
 
 //merges all adjactend free Nodes in mList
-void mergeAll(mList list);
+void mergeAll(mList* list);
 
 
 
