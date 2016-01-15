@@ -59,11 +59,3 @@ Boolean isEmpty(processQueue* queue){
 	}
 }
 
-void printQueue(processQueue* queue){
-	processQueueNode* temp = queue->head;
-	while (1){
-		if (temp == NULL){ return; }
-		printf("%u\n", temp->content->pid);
-		temp = temp->next;
-	}
-}
