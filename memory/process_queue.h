@@ -10,7 +10,7 @@ PROCESS_QUEUE struct incl. Nodes for managing Process that dont fit into Memory 
 //QueueNode
 typedef struct{
 	PCB_t* content;
-	processQueueNode* next;
+	struct processQueueNode* next;
 }processQueueNode;
 
 //Process Queue
@@ -23,7 +23,7 @@ typedef struct{
 //Function Prototypes
 
 //creates new processQueueNode
-processQueueNode* makeProcessQueueNode();
+processQueueNode* makeProcessQueueNode(PCB_t* pcb);
 
 //Creates new ProcessQueue
 processQueue* makeProcessQueue();
