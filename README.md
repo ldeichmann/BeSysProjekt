@@ -1,24 +1,19 @@
 # BeSysProjekt
 
-Besy shit
+Speicherverwaltung mit dynamischer Partitionierung
 
-einbindung core.c:94
+## Status
 
+[ ] Einbindung bei core.c:94
 
-memory.c .h
+[x] schreiben mList.c .h
+[ ] testen mList.c .h
 
-Mlist.c .h
+[x] schreiben processQueue.c .c
+[x] testen processQueue
 
-Queue einflechten
+[ ] Kompaktierung ausloesen
 
-kompaktierung
-
-
-
-speicherverwaltung via LL
-
-Dynamische Partitionierung oder Paging ?? Email
-
-
+[ ] Optimierung
 
 optimierung alles 
