@@ -45,7 +45,7 @@ void removeProvess(mList* list, PCB_t* process);
 void compact(mList* list);
 
 //merges two free Nodes into one
-mListNode merge(mListNode* a, mListNode* b);
+mListNode* merge(mListNode* a, mListNode* b);
 
 //merges all adjactend free Nodes in mList
 void mergeAll(mList* list);
