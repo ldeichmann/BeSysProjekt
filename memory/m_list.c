@@ -21,7 +21,7 @@ mListNode* makeMListNode(mType type, unsigned pid, int start, int length){
 //makes new MList
 mList* makeMList(){
 	mList* out = malloc(sizeof(mList));
-	out->head = makeMListNode(mfree, NULL, FREE_PID, 0, MEMORY_SIZE);
+	out->head = makeMListNode(mfree, FREE_PID, 0, MEMORY_SIZE);
 	out->length = 1;
 	return out;
 }
@@ -63,7 +63,20 @@ Boolean addProcess(mList* list, PCB_t* process){
 }
 
 //removes Process from List
-void removeProvess(mList* list, PCB_t* process){
+void removeProcess(mList* list, PCB_t* process){
+	mListNode* tmp = list->head;
+	while (tmp != NULL){
+		if (tmp->pid == process->pid){
+			tmp->type = mfree;
+			tmp->pid = FREE_PID;
+			return;
+		}
+		tmp = tmp->next;
+	}
+}
+//DEPRECATED
+/*void removeProcess(mList* list, PCB_t* process){
+	printf("removeProcess\n");
 	mListNode* out = list->head;
 	mListNode* tmp;
 	// is head the process we are looking for?
@@ -87,10 +100,13 @@ void removeProvess(mList* list, PCB_t* process){
 		} 
 	}
 	list->length--; // we have to assume process was actually in the list, if it wasn't, we've made a wrong choice before
-}
+	printf("removeProcess done\n");
+}*/
+
 
 //compacts list
 void compact(mList* list){
+	printf("COMPACT");
 
 	mListNode* out = list->head;
 	mListNode* tmp;
@@ -102,31 +118,53 @@ void compact(mList* list){
 			while (out->next->type == mfree) {  // merge all the free blocks
 				out = merge(out, out->next);
 			}
-			// now swap out with out->next
+			/*// now swap out with out->next
 			out->next->start = out->start;
 			out->start = out->next->start + out->next->length;
 			tmp = out->next->next;
 			out->next->next = out;
-			out->next = tmp;
+			out->next = tmp;*/
+			swap(out, out->next);
 
 		} else {
-
 			out = out->next;
-
 		}
 	}
+}
 
+int swap(mListNode* a, mListNode* b){
+	unsigned pidSwap;
+	int startSwap;
+	int lengthSwap;
+	mType typeSwap;
 
-	//TODO
+	//swap Type
+	typeSwap = a->type;
+	a->type = b->type;
+	b->type = typeSwap;
+
+	//swap PID
+	pidSwap = a->pid;
+	a->pid = b->pid;
+	b->pid = pidSwap;
+
+	//swap length
+	lengthSwap = a->length;
+	a->length = b->length;
+	b->length = lengthSwap;
+
+	//swap start
+	startSwap = a->start;
+	a->start = b->start;
+	b->start = startSwap + b->length;
 }
 
 //merges b in to a
 mListNode* merge(mListNode* a, mListNode* b){
-
 	a->length = a->length + b->length;
 	a->next = b->next;
 	free(b); // FREE needs to be checked
-
+	return a;
 }
 
 
@@ -160,8 +198,11 @@ mListNode* findNextFit(mList* list, int len){
 		if ((temp->next->type == mfree) && (temp->next->length >= len)) {
 			return temp;
 		}
+		temp = temp->next;
+
 	}
 	// there were no fitting blocks
+	compact(list); //If no fit compact list and return NULL //to be changed for optimization
 	return NULL;
 }
 

@@ -14,12 +14,12 @@ typedef enum{
 	mfree, used
 }mType;
 
-typedef struct{
+typedef struct mListNode{
 	mType type;
 	unsigned pid;
 	int start;
 	int length;
-	mListNode* next;
+	struct mListNode* next;
 }mListNode;
 
 typedef struct{
@@ -30,7 +30,7 @@ typedef struct{
 //function Prototypes
 
 //makes new MListNode
-mListNode* makeMListNode();
+mListNode* makeMListNode(mType type, unsigned pid, int start, int length);
 
 //makes new MList
 mList* makeMList();
@@ -39,7 +39,7 @@ mList* makeMList();
 Boolean addProcess(mList* list, PCB_t* process);
 
 //removes Process from List
-void removeProvess(mList* list, PCB_t* process);
+void removeProcess(mList* list, PCB_t* process);
 
 //compacts list
 void compact(mList* list);
