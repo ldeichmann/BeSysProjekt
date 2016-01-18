@@ -44,6 +44,9 @@ void removeProcess(mList* list, PCB_t* process);
 //compacts list
 void compact(mList* list);
 
+//swapes nodes
+mListNode* swapper(mListNode* a, mListNode*b);
+
 //merges two free Nodes into one
 mListNode* merge(mListNode* a, mListNode* b);
 

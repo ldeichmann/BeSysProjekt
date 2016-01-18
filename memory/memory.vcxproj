@@ -84,6 +84,7 @@
     <ClInclude Include="log.h" />
     <ClInclude Include="m_list.h" />
     <ClInclude Include="process_queue.h" />
+    <ClInclude Include="tests.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="core.c" />
@@ -92,6 +93,7 @@
     <ClCompile Include="log.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="m_list.c" />
+    <ClCompile Include="tests.c" />
     <ClCompile Include="process_queue.c" />
   </ItemGroup>
   <ItemGroup>

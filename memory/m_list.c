@@ -74,90 +74,88 @@ void removeProcess(mList* list, PCB_t* process){
 		tmp = tmp->next;
 	}
 }
-//DEPRECATED
-/*void removeProcess(mList* list, PCB_t* process){
-	printf("removeProcess\n");
-	mListNode* out = list->head;
-	mListNode* tmp;
-	// is head the process we are looking for?
-	if (out->pid == process->pid) {
-		list->head = out->next;
-		free(out);
-	}
-	else {
-		while (out->next != NULL); { // as long as there is a next element, check it
-			if (out->next->pid == process->pid) { // next element is process
-				if (out->next->next == NULL) { // next element has no element afterwards
-					free(out->next); // free the element without
-					out->next = NULL; // set next to null
-				}
-				else { // there is a next->next element
-					tmp = out->next->next; // save the next->next element
-					free(out->next); // free the element without
-					out->next = tmp; // set next to the new element
-				}
-			}
-		} 
-	}
-	list->length--; // we have to assume process was actually in the list, if it wasn't, we've made a wrong choice before
-	printf("removeProcess done\n");
-}*/
-
 
 //compacts list
 void compact(mList* list){
-	printf("COMPACT");
+	printf("COMPACT\n");
 
 	mListNode* out = list->head;
 	mListNode* tmp;
 
+
 	// the strategy here is do move all the free blocks to the end, merging free blocks as we move along
+	// but we'll have to take a look at the first two elements first
 
-	while (out->next != NULL) { // while there is an element after out
-		if (out->type == mfree) { // out is free, move it down memory lane
-			while (out->next->type == mfree) {  // merge all the free blocks
-				out = merge(out, out->next);
-			}
-			/*// now swap out with out->next
-			out->next->start = out->start;
-			out->start = out->next->start + out->next->length;
-			tmp = out->next->next;
-			out->next->next = out;
-			out->next = tmp;*/
-			swap(out, out->next);
-
-		} else {
-			out = out->next;
+	if (out->type == mfree) {
+		while (out->next != NULL && out->next->type == mfree) {  // merge all the free blocks
+			out = merge(out, out->next);
 		}
+		if (out->next != NULL) {
+			list->head = swapper(out, out->next);; // changing the list head first
+			out = list->head;
+		}
+	}
+	
+
+	while (out->next != NULL && out->next->next != NULL) { // while there are two elements after out
+
+		while (out->next != NULL && out->next->next != NULL && out->next->type == mfree && out->next->next->type == mfree) {  // merge all the free blocks
+			out = merge(out->next, out->next->next);
+		}
+		if (out->next != NULL && out->next->next != NULL) { // if there still are two elements after out
+			if (out->next->type == mfree) { // and the first is mfree, the second isn't
+				out->next = swapper(out->next, out->next->next);
+			}
+			else {
+				out = out->next;
+			}
+
+		}
+
 	}
 }
 
-int swap(mListNode* a, mListNode* b){
-	unsigned pidSwap;
-	int startSwap;
-	int lengthSwap;
-	mType typeSwap;
+mListNode* swapper(mListNode* a, mListNode* b) {
+	mListNode* tmp;
 
-	//swap Type
-	typeSwap = a->type;
-	a->type = b->type;
-	b->type = typeSwap;
+	printf("Swapper: Switching %d and %d\n", a->pid, b->pid);
 
-	//swap PID
-	pidSwap = a->pid;
-	a->pid = b->pid;
-	b->pid = pidSwap;
+	tmp = b->next; // save the next->next element
+	b->start = a->start; //swap the starts
+	a->start = b->start + b->length; //calculate out->next new start
+	b->next = a; // move out->next after out->next->next
+	a->next = tmp; // switch out->next
 
-	//swap length
-	lengthSwap = a->length;
-	a->length = b->length;
-	b->length = lengthSwap;
-
-	//swap start
-	startSwap = a->start;
-	a->start = b->start;
-	b->start = startSwap + b->length;
+	return b;
 }
+
+//DEPRECATED
+//int swap(mListNode* a, mListNode* b){
+//	unsigned pidSwap;
+//	int startSwap;
+//	int lengthSwap;
+//	mType typeSwap;
+//
+//	//swap Type
+//	typeSwap = a->type;
+//	a->type = b->type;
+//	b->type = typeSwap;
+//
+//	//swap PID
+//	pidSwap = a->pid;
+//	a->pid = b->pid;
+//	b->pid = pidSwap;
+//
+//	//swap length
+//	lengthSwap = a->length;
+//	a->length = b->length;
+//	b->length = lengthSwap;
+//
+//	//swap start
+//	startSwap = a->start;
+//	a->start = b->start;
+//	b->start = startSwap + b->length;
+//}
 
 //merges b in to a
 mListNode* merge(mListNode* a, mListNode* b){
