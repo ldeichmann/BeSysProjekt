@@ -10,13 +10,24 @@ void print_mlist(mList* m) {
 	while (1) {
 		if (temp == NULL) { break; }
 		printf("<\n");
-		printf("%u\n", temp->pid);
-		printf("%u\n", temp->type);
-		printf("%u\n", temp->start);
-		printf("%u\n", temp->length);
+		printf("PID: %u\n", temp->pid);
+		printf("TYP: %u\n", temp->type);
+		printf("STA: %u\n", temp->start);
+		printf("LEN: %u\n", temp->length);
 		printf(">\n");
 		temp = temp->next;
 	}
+}
+
+int compare_mListNode(mListNode* node, int pid, mType type, int start, int length) {
+
+	if (node->pid == pid && node->type == type && node->start == start && node->length == length) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+
 }
 
 int test_mlist(){
@@ -31,6 +42,8 @@ int test_mlist(){
 	PCB_t* proc4 = malloc(sizeof(PCB_t));
 
 	mList* list = makeMList();
+
+	int test = 0;
 
 
 	proc1->pid = 1;
@@ -48,6 +61,42 @@ int test_mlist(){
 	addProcess(list, proc3);
 	addProcess(list, proc4);
 
+	if (compare_mListNode(list->head, 1, used, 0, 40) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next, 2, used, 40, 7) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next->next, 3, used, 47, 500) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next->next->next, 4, used, 547, 2) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next->next->next->next, FREE_PID, mfree, 549, 475) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+
 	print_mlist(list);
 
 	removeProcess(list, proc2);
@@ -57,6 +106,36 @@ int test_mlist(){
 
 	printf("TEST: compacting\n");
 	compact(list);
+
+	if (compare_mListNode(list->head, 1, used, 0, 40) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next, 3, used, 40, 500) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next->next, 4, used, 540, 2) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next->next->next, FREE_PID, mfree, 542, 482) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+
 
 	print_mlist(list);
 
@@ -68,15 +147,69 @@ int test_mlist(){
 	printf("TEST: compacting\n");
 	compact(list);
 
+	if (compare_mListNode(list->head, 3, used, 0, 500) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next, 4, used, 500, 2) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next->next, FREE_PID, mfree, 502, 522) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+
 	print_mlist(list);
 	removeProcess(list, proc3);
 	printf("TEST: removed proc3\n");
 	print_mlist(list);
+
+
+	if (compare_mListNode(list->head, FREE_PID, mfree, 0, 500) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next, 4, used, 500, 2) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+	if (compare_mListNode(list->head->next->next, FREE_PID, mfree, 502, 522) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
+
 	removeProcess(list, proc4);
 	printf("TEST: removed proc4\n");
 	print_mlist(list);
 	printf("TEST: compacting\n");
 	compact(list);
 	print_mlist(list);
+
+	if (compare_mListNode(list->head, FREE_PID, mfree, 0, 1024) == 0) {
+		printf("Test %d failed\n", test);
+	}
+	else {
+		printf("Test %d sucessful\n", test);
+	}
+	test++;
 
 }

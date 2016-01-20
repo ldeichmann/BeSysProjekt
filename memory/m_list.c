@@ -77,7 +77,7 @@ void removeProcess(mList* list, PCB_t* process){
 
 //compacts list
 void compact(mList* list){
-	printf("COMPACT\n");
+	//printf("COMPACT\n");
 
 	mListNode* out = list->head;
 	mListNode* tmp;
@@ -85,24 +85,25 @@ void compact(mList* list){
 
 	// the strategy here is do move all the free blocks to the end, merging free blocks as we move along
 	// but we'll have to take a look at the first two elements first
-
 	if (out->type == mfree) {
-		while (out->next != NULL && out->next->type == mfree) {  // merge all the free blocks
-			out = merge(out, out->next);
-		}
-		if (out->next != NULL) {
+		//while (out->next != NULL && out->next->type == mfree) {  // merge all the free blocks
+		//	out = merge(out, out->next);
+		//}
+		out = mergeNext(out);
+		if (out->next != NULL) { // if out is mfree, out->next isn't
 			list->head = swapper(out, out->next);; // changing the list head first
 			out = list->head;
 		}
 	}
 	
-
+	mergeNext(out->next);
 	while (out->next != NULL && out->next->next != NULL) { // while there are two elements after out
-
-		while (out->next != NULL && out->next->next != NULL && out->next->type == mfree && out->next->next->type == mfree) {  // merge all the free blocks
-			out = merge(out->next, out->next->next);
-		}
-		if (out->next != NULL && out->next->next != NULL) { // if there still are two elements after out
+		// don't do this here, it will shift out index and causes a check mess afterwards
+		// remove this comment in next iteration
+		//while (out->next != NULL && out->next->next != NULL && out->next->type == mfree && out->next->next->type == mfree) {  // merge all the free blocks
+		//	out = merge(out->next, out->next->next);
+		//}
+		//if (out->next != NULL && out->next->next != NULL) { // if there still are two elements after out
 			if (out->next->type == mfree) { // and the first is mfree, the second isn't
 				out->next = swapper(out->next, out->next->next);
 			}
@@ -110,15 +111,17 @@ void compact(mList* list){
 				out = out->next;
 			}
 
-		}
-
+		//}
+		mergeNext(out->next); //merge all the free blocks
 	}
 }
+
+
 
 mListNode* swapper(mListNode* a, mListNode* b) {
 	mListNode* tmp;
 
-	printf("Swapper: Switching %d and %d\n", a->pid, b->pid);
+	//printf("Swapper: Switching %d and %d\n", a->pid, b->pid);
 
 	tmp = b->next; // save the next->next element
 	b->start = a->start; //swap the starts
@@ -129,34 +132,6 @@ mListNode* swapper(mListNode* a, mListNode* b) {
 	return b;
 }
 
-//DEPRECATED
-//int swap(mListNode* a, mListNode* b){
-//	unsigned pidSwap;
-//	int startSwap;
-//	int lengthSwap;
-//	mType typeSwap;
-//
-//	//swap Type
-//	typeSwap = a->type;
-//	a->type = b->type;
-//	b->type = typeSwap;
-//
-//	//swap PID
-//	pidSwap = a->pid;
-//	a->pid = b->pid;
-//	b->pid = pidSwap;
-//
-//	//swap length
-//	lengthSwap = a->length;
-//	a->length = b->length;
-//	b->length = lengthSwap;
-//
-//	//swap start
-//	startSwap = a->start;
-//	a->start = b->start;
-//	b->start = startSwap + b->length;
-//}
-
 //merges b in to a
 mListNode* merge(mListNode* a, mListNode* b){
 	a->length = a->length + b->length;
@@ -165,6 +140,14 @@ mListNode* merge(mListNode* a, mListNode* b){
 	return a;
 }
 
+//merges every mfree node after root with root if root is mfree
+mListNode* mergeNext(mListNode* root) {
+	//printf("mergeNext\n");
+	while (root != NULL && root->next != NULL && root->type == mfree && root->next->type == mfree) {  // merge all the free blocks
+		root = merge(root, root->next);
+	}
+	return root;
+}
 
 // WARNUNG: REDUNDANTER CODE! Brauchen wir diese Methode?
 //merges all adjactend free Nodes in mList
