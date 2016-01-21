@@ -22,7 +22,7 @@ typedef struct mListNode{
 	struct mListNode* next;
 }mListNode;
 
-typedef struct{
+typedef struct mList{
 	mListNode* head;
 	int length;
 }mList;

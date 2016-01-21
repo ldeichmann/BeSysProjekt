@@ -8,13 +8,13 @@ PROCESS_QUEUE struct incl. Nodes for managing Process that dont fit into Memory 
 #include "bs_types.h"
 
 //QueueNode
-typedef struct{
+typedef struct processQueueNode{
 	PCB_t* content;
 	struct processQueueNode* next;
 }processQueueNode;
 
 //Process Queue
-typedef struct{
+typedef struct processQueue{
 	processQueueNode* head;
 	processQueueNode* tail;
 	int length;
