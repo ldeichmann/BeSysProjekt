@@ -1,4 +1,6 @@
  # OwnerID start duration size type
  00 00 1000 100 os
  01 00 150 100 interactive
- 02 100 200 200 batch
+ 05 50 500 920 foreground
+ 03 100 200 200 batch
+ 04 100 200 200 foreground

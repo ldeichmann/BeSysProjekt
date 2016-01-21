@@ -13,6 +13,7 @@
 #include "globals.h"
 #include "core.h"
 #include "loader.h"
+#include "m_list.h"
 
 
 
@@ -23,6 +24,7 @@ PCB_t process;		// the only user process used for batch and FCFS
 PCB_t* pNewProcess;	// pointer for new process read from batch
 //blockedListElement_t blockedOne; // the only process that can be blocked
 FILE* processFile; 
+struct mList* memList; //### memList for memory management
 
 /* ---------------------------------------------------------------- */
 /*                Declarations of local helper functions            */
@@ -35,7 +37,7 @@ FILE* processFile;
 
 void initOS(void)
 {
-	
+	memList = makeMList(); //### initiate memList
 	char filename[128] = PROCESS_FILENAME; 
 	unsigned i;					// iteration variable
 	systemTime=0;				// reset the system time to zero
@@ -90,7 +92,8 @@ void coreLoop(void)
 				// now search for a suitable piece of memory for the process
 				/* +++ this needs to be extended for real memory management +++	*/
 				// this simple if must be replaced with searching for a memory location:
-				if (usedMemory+candidateProcess->size <= MEMORY_SIZE)
+				//if (usedMemory+candidateProcess->size <= MEMORY_SIZE)
+				if (addProcess(memList, candidateProcess)) //### check for space in memory and add to memList if possible
 					{	// enough memory available, and location in memory found: start process
 					candidateProcess->status=running;	// all active processes are marked active
 					runningCount++;						// and add to number of running processes
@@ -168,6 +171,7 @@ void coreLoop(void)
 		/* +++ this needs to be extended for real memory management +++	*/
 		if (nextReady!=NULL)	// check of a process needs to be terminated
 			{					// loop may be running even if no processes are active
+			removeProcess(memList, nextReady);
 			usedMemory=usedMemory-nextReady->size;	// mark memory of the process free
 			logPidMem(nextReady->pid, "Process terminated, memory freed"); 
 			deleteProcess (nextReady);	// terminate process
