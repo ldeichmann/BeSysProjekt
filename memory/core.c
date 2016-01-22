@@ -26,7 +26,7 @@ PCB_t* pNewProcess;	// pointer for new process read from batch
 //blockedListElement_t blockedOne; // the only process that can be blocked
 FILE* processFile; 
 struct mList* memList; //### memList for memory management
-struct processQueue * procQueue;
+struct processQueue * procQueue; //### process queue for memory management
 /* ---------------------------------------------------------------- */
 /*                Declarations of local helper functions            */
 
@@ -69,7 +69,8 @@ void coreLoop(void)
 		// select and run a process
 		if (candidateProcess==NULL)	// no candidate read from file yet
 			{
-			if ((!isEmpty(procQueue)) && ((procQueue->head->content->size + usedMemory) <= MEMORY_SIZE)) // if there are processes in the queue, try head first, as it was to be started first
+			// if there is a processes in the queue, it has priority
+			if ((!isEmpty(procQueue)) && ((procQueue->head->content->size + usedMemory) <= MEMORY_SIZE))
 				{
 				logGeneric("No candidate read, reading next process from queue");
 				candidateProcess = dequeue(procQueue);
@@ -103,37 +104,21 @@ void coreLoop(void)
 				// now search for a suitable piece of memory for the process
 				/* +++ this needs to be extended for real memory management +++	*/
 				// this simple if must be replaced with searching for a memory location:
-				// ### using it to reduce runtime from searching
+				// ### still using it to reduce runtime from searching
 				if (usedMemory + candidateProcess->size <= MEMORY_SIZE) {
-					if (addProcess(memList, candidateProcess)) //### add to memList if possible
-					{	// enough memory available, and location in memory found: start process
-						candidateProcess->status = running;	// all active processes are marked active
-						runningCount++;						// and add to number of running processes
-						usedMemory = usedMemory + candidateProcess->size;	// update amount of used memory
-						systemTime = systemTime + LOADING_DURATION;	// account for time used by OS
-						logPidMem(candidateProcess->pid, "Process started and memory allocated");
-						candidateProcess = NULL;	// process is now a running process, not a candidate any more
-					}
-					else
-					{
-						logPidMem(candidateProcess->pid, "Process too large, compacting");
+					// enough memory available, add to memory and start process
+					if (!addProcess(memList, candidateProcess)) //### add to memList if possible
+					{	
+						logPidMem(candidateProcess->pid, "Enough space, not consecutive, compacting");
 						compact(memList);
-						if (addProcess(memList, candidateProcess)) //### add to memList now, it shouldn't fail
-						{	// enough memory available, and location in memory found: start process
-							candidateProcess->status = running;	// all active processes are marked active
-							runningCount++;						// and add to number of running processes
-							usedMemory = usedMemory + candidateProcess->size;	// update amount of used memory
-							systemTime = systemTime + LOADING_DURATION;	// account for time used by OS
-							logPidMem(candidateProcess->pid, "Process started and memory allocated");
-							candidateProcess = NULL;	// process is now a running process, not a candidate any more
-						}
-						else
-						{
-							logPidMem(candidateProcess->pid, "Process should have fit, something went horribly wrong, not started, queued");
-							enqueue(procQueue, candidateProcess);
-							candidateProcess = NULL; // process is now in queue
-						}
-					}
+						addProcess(memList, candidateProcess); //### add to memList now, it shouldn't be able to fail at all
+					} 
+					candidateProcess->status = running;	// all active processes are marked active
+					runningCount++;						// and add to number of running processes
+					usedMemory = usedMemory + candidateProcess->size;	// update amount of used memory
+					systemTime = systemTime + LOADING_DURATION;	// account for time used by OS
+					logPidMem(candidateProcess->pid, "Process started and memory allocated");
+					candidateProcess = NULL;	// process is now a running process, not a candidate any more
 				}
 				else {
 					logPidMem(candidateProcess->pid, "Process too large, queueing");
@@ -186,7 +171,7 @@ void coreLoop(void)
 				delta=(candidateProcess->start-systemTime)/runningCount;	// processes share available systemTime
 				if (delta == 0) { // ### fix infinite loop that can occur when the above delta floors to zero
 					delta = 1;    // as at this point, delta has to have a non zero value to proceed
-				}
+				}                 // this is not a permanent solution and only meant as a hotfix
 				nextReady=NULL;		// no process to terminate now
 				}
 			}
@@ -215,7 +200,7 @@ void coreLoop(void)
 			runningCount--;				// one running process less
 			}
 		} 
-	// loop until no running processes exist any more and no process is waiting t be started
+	// loop until no running processes exist any more and no process is waiting t be started or queued
 	while ((runningCount>0) || (fileComplete==FALSE) || (!isEmpty(procQueue)) );		
 	}
 
