@@ -1,0 +1,23 @@
+\contentsline {section}{\numberline {1}Pr\IeC {\"a}ambel}{1}
+\contentsline {section}{\numberline {2}Getting Started}{2}
+\contentsline {section}{\numberline {3}Designreport}{3}
+\contentsline {subsection}{\numberline {3.1}Getroffene Annahmen}{3}
+\contentsline {subsection}{\numberline {3.2}Funktionsumfang}{3}
+\contentsline {subsection}{\numberline {3.3}Betriebsbedingungen}{3}
+\contentsline {subsection}{\numberline {3.4}Implementierung}{3}
+\contentsline {subsubsection}{\numberline {3.4.1}processQueue}{3}
+\contentsline {paragraph}{processQueue* makeProcessQueue()}{3}
+\contentsline {paragraph}{processQueueNode* makeProcessQueueNode(PCB\_t* pcb)}{3}
+\contentsline {paragraph}{void enqueue(processQueue* queue, PCB\_t* process)}{3}
+\contentsline {paragraph}{PCB\_t* dequeue(processQueue* queue)}{4}
+\contentsline {paragraph}{Boolean isEmpty(processQueue* queue)}{4}
+\contentsline {subsubsection}{\numberline {3.4.2}mList}{4}
+\contentsline {paragraph}{mList* makeMList()}{4}
+\contentsline {paragraph}{mListNode* makeMListNode(mType type, unsigned pid, int start, int length)}{4}
+\contentsline {paragraph}{Boolean addProcess(mList* list, PCB\t * process)}{4}
+\contentsline {paragraph}{void removeProcess(mList* list, PCB\_t* process)}{4}
+\contentsline {paragraph}{void compact(mList* list)}{4}
+\contentsline {paragraph}{mListNode* swapper(mListNode* a, mListNode* b)}{4}
+\contentsline {paragraph}{mListNode* merge(mListNode* a, mListNode* b)}{4}
+\contentsline {paragraph}{mergeAll}{4}
+\contentsline {paragraph}{mListNode* findNextFit(mList* list, int length)}{5}

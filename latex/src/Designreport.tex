@@ -1,0 +1,59 @@
+%Designreport
+\section{Designreport}
+\subsection{Getroffene Annahmen}
+Wir nehmen bei unsere Implementierung an das kein Prozess jemals die PID 0 zugewiesen bekommt.
+\colorbox{yellow}{MEHR???}
+
+\subsection{Funktionsumfang}
+Wir erweiterten die gegebene Implementierung von SimOS,im wesentlichen,  um Funktionen zur Verwaltung des Arbeitsspeichers (realisiert in m\_list.c) und zur temporären Speicherung von Prozessen die aktuell zu groß für den Arbeitsspeicher sind (realisiert in process\_queue.c).
+Nähere Informationen zu m\_list und process\_queue befinden sich im der erklärung zur Implementierung.
+Weitere änderungen waren die Umlagerung von Variablen um bessere Lokalität zu haben und Änderungen um die Laufzeit zu optimieren.
+\colorbox{yellow}{LETZTERES GENAUER}  
+
+\subsection{Betriebsbedingungen}
+Die einzige Betriebsbedingung ist die in "Getting Started" beschriebene, korrekt formatierte \textit{processes.txt} Datei. 
+
+
+\subsection{Implementierung}
+
+\subsubsection{processQueue}
+\colorbox{yellow}{irgendwie n Diagramm}
+Die Process Queue die wir in \textit{process\_queue.c} realisiert haben ermöglicht es dem Betriebssystem Prozesse die aktuell, mangels ausreichenden Speichers, nicht ausgeführt werden können in einer Warteschlange zu Speichern und später aufzuführen ohne dafür die Ausführung anderer Prozesse blockieren zu müssen.
+Die Process Queue basiert in ihrer Implementierung auf einer Listenstruktur und stellt die structs processQueue und processQueueNode zur verfügung (siehe \textit{m\_list.h}).
+Desweiteren stellt die Schnittstelle folgende Funtionen zur Verwendung in SimOS zur verfügung:
+
+\paragraph{processQueue* makeProcessQueue()} erzeugt eine neue processQueue, alloziert passenden Speicher und gibt einen Pointer auf die Queue zurück.
+
+\paragraph{processQueueNode* makeProcessQueueNode(PCB\_t* pcb)} erzeugt eine neue processQueueNode, die als Inhalt den übergebenen Pointer auf eine PCB\_t enthält, alloziert passenden Speicher und gibt einen Pointer auf die QueueNode zurück.
+
+\paragraph{void enqueue(processQueue* queue, PCB\_t* process)} ermöglicht das einreihen eines Processes in die Queue. Es wird intern eine processQueueNode erzeugt und in die gegebene queue eingereiht.
+
+\paragraph{PCB\_t* dequeue(processQueue* queue)} ermöglicht es den ersten Prozess aus der gegebenen Queue zu entfernen und gibt einen Pointer auf den Prozess zurück.
+
+\paragraph{Boolean isEmpty(processQueue* queue)} eine Hilfsfunktion die zurückgibt ob gegebene queue leer ist.
+
+
+\subsubsection{mList}
+\colorbox{yellow}{auch irgendwie n Diagramm}
+
+Die Memory list ermöglicht die tatsächliche Speicherverwaltung. Sie basiert auf einer Listenstruktur und beeinhaltet Blöcke die für die Segmente im Arbeitsspeicher stehen, die jeweils frei oder genutzt sein können. 
+Zur Realisierung dieser Aufgabe stellt die Implementierung die structs mList und MlistNode, sowie einen enum mType für die zustände der Blöcke bereit.
+Desweiteren stellt die Schnittstelle folgende Funktionen zur Verwendung in SimOS zur verfügung:
+
+\paragraph{mList* makeMList()} erzeugt eine neue MemoryList, alloziert passenden Speicher und gibt einen Pointer auf die Liste zurück.
+
+\paragraph{mListNode* makeMListNode(mType type, unsigned pid, int start, int length)} erzeugt eine neue mListNode aus gegebenen Parametern, alloziert passenden Speicher und gibt einen Pointer auf die Node zurück.
+
+\paragraph{Boolean addProcess(mList* list, PCB\t* process)} fügt den process der gefragten list hinzu.
+
+\paragraph{void removeProcess(mList* list, PCB\_t* process)} entfernt den process aus der gefragten Liste.
+
+\paragraph{void compact(mList* list)} kompaktiert die gegebene Liste um der ihrer Fragmentierung entgegenzuwirken. \colorbox{yellow}{WANN WIRD GECALLT??}
+
+\paragraph{mListNode* swapper(mListNode* a, mListNode* b)} eine Hilfsmethode zum Austausch zweier Node innerhalb einer Liste, gibt einen Pointer zur neuen mListNode b zurück. Wird innerhalb von compact genutzt.
+
+\paragraph{mListNode* merge(mListNode* a, mListNode* b)} eine Hilfsmethode zum zusammenfügen zweier Nodes, gibt einen Pointer zur zusammengefügten mListNode zurück. Wird innerhalb von compact verwendet.
+
+\paragraph{mergeAll}\colorbox{yellow}{schmeißen wir raus oder??}
+
+\paragraph{mListNode* findNextFit(mList* list, int length)} eine Hilfsmethode zum finden der nächsten passenden Lücke innerhalb der Liste. Gibt einen Pointer auf die mListNode* VOR der passenden Lücke zurück. 
