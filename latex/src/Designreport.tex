@@ -1,17 +1,17 @@
 %Designreport
 \section{Designreport}
 \subsection{Getroffene Annahmen}
-Wir nehmen bei unsere Implementierung an das kein Prozess jemals die PID 0 zugewiesen bekommt.
+In unserer Implementierung wird die Annahme getroffen, dass keinem Prozess jemals die PID 0 zugewiesen wird. Zudem wird angenommen, dass keine Prozesse gestartet werden, deren Speicherbedarf die Größe des Systemspeichers überschreitet.
 \colorbox{yellow}{MEHR???}
 
 \subsection{Funktionsumfang}
-Wir erweiterten die gegebene Implementierung von SimOS,im wesentlichen,  um Funktionen zur Verwaltung des Arbeitsspeichers (realisiert in m\_list.c) und zur temporären Speicherung von Prozessen die aktuell zu groß für den Arbeitsspeicher sind (realisiert in process\_queue.c).
-Nähere Informationen zu m\_list und process\_queue befinden sich im der erklärung zur Implementierung.
-Weitere änderungen waren die Umlagerung von Variablen um bessere Lokalität zu haben und Änderungen um die Laufzeit zu optimieren.
-\colorbox{yellow}{LETZTERES GENAUER}  
+Wir erweiterten die gegebene Implementierung von SimOS im wesentlichen um Funktionen zur Verwaltung des Arbeitsspeichers (realisiert in m\_list.c) und zur temporären Speicherung von Prozessen, die aktuell zu groß für den Arbeitsspeicher sind (realisiert in process\_queue.c).
+Nähere Informationen zu m\_list und process\_queue befinden sich in der Erklärung zur Implementierung.
+Weitere Änderungen waren die Umlagerung von Variablen, um bessere Lokalität zu gewährleisten, und Änderungen, welche die Laufzeit optimieren.
+\colorbox{yellow}{LETZTERES GENAUER}
 
 \subsection{Betriebsbedingungen}
-Die einzige Betriebsbedingung ist die in "Getting Started" beschriebene, korrekt formatierte \textit{processes.txt} Datei. 
+Die einzige Betriebsbedingung ist die in "Getting Started" beschriebene, korrekt formatierte \textit{processes.txt} Datei.
 
 
 \subsection{Implementierung}
@@ -36,7 +36,7 @@ Desweiteren stellt die Schnittstelle folgende Funtionen zur Verwendung in SimOS 
 \subsubsection{mList}
 \colorbox{yellow}{auch irgendwie n Diagramm}
 
-Die Memory list ermöglicht die tatsächliche Speicherverwaltung. Sie basiert auf einer Listenstruktur und beeinhaltet Blöcke die für die Segmente im Arbeitsspeicher stehen, die jeweils frei oder genutzt sein können. 
+Die Memory list ermöglicht die tatsächliche Speicherverwaltung. Sie basiert auf einer Listenstruktur und beeinhaltet Blöcke die für die Segmente im Arbeitsspeicher stehen, die jeweils frei oder genutzt sein können.
 Zur Realisierung dieser Aufgabe stellt die Implementierung die structs mList und MlistNode, sowie einen enum mType für die zustände der Blöcke bereit.
 Desweiteren stellt die Schnittstelle folgende Funktionen zur Verwendung in SimOS zur verfügung:
 
@@ -54,6 +54,6 @@ Desweiteren stellt die Schnittstelle folgende Funktionen zur Verwendung in SimOS
 
 \paragraph{mListNode* merge(mListNode* a, mListNode* b)} eine Hilfsmethode zum zusammenfügen zweier Nodes, gibt einen Pointer zur zusammengefügten mListNode zurück. Wird innerhalb von compact verwendet.
 
-\paragraph{mergeAll}\colorbox{yellow}{schmeißen wir raus oder??}
+\paragraph{mergeAll}\colorbox{yellow}{schmeißen wir raus oder?? - Ja, weg damit}
 
-\paragraph{mListNode* findNextFit(mList* list, int length)} eine Hilfsmethode zum finden der nächsten passenden Lücke innerhalb der Liste. Gibt einen Pointer auf die mListNode* VOR der passenden Lücke zurück. 
+\paragraph{mListNode* findNextFit(mList* list, int length)} eine Hilfsmethode zum finden der nächsten passenden Lücke innerhalb der Liste. Gibt einen Pointer auf die mListNode* VOR der passenden Lücke zurück.
