@@ -2,7 +2,6 @@
 \section{Designreport}
 \subsection{Getroffene Annahmen}
 In unserer Implementierung wird die Annahme getroffen, dass keinem Prozess jemals die PID 0 zugewiesen wird. Zudem wird angenommen, dass keine Prozesse gestartet werden, deren Speicherbedarf die Größe des Systemspeichers überschreitet.
-\colorbox{yellow}{MEHR???}
 
 \subsection{Funktionsumfang}
 Wir erweiterten die gegebene Implementierung von SimOS im wesentlichen um Funktionen zur Verwaltung des Arbeitsspeichers (realisiert in m\_list.c) und zur temporären Speicherung von Prozessen, die aktuell zu groß für den Arbeitsspeicher sind (realisiert in process\_queue.c).
@@ -53,7 +52,5 @@ Desweiteren stellt die Schnittstelle folgende Funktionen zur Verwendung in SimOS
 \paragraph{mListNode* swapper(mListNode* a, mListNode* b)} eine Hilfsmethode zum Austausch zweier Node innerhalb einer Liste, gibt einen Pointer zur neuen mListNode b zurück. Wird innerhalb von compact genutzt.
 
 \paragraph{mListNode* merge(mListNode* a, mListNode* b)} eine Hilfsmethode zum zusammenfügen zweier Nodes, gibt einen Pointer zur zusammengefügten mListNode zurück. Wird innerhalb von compact verwendet.
-
-\paragraph{mergeAll}\colorbox{yellow}{schmeißen wir raus oder?? - Ja, weg damit}
 
 \paragraph{mListNode* findNextFit(mList* list, int length)} eine Hilfsmethode zum finden der nächsten passenden Lücke innerhalb der Liste. Gibt einen Pointer auf die mListNode* VOR der passenden Lücke zurück.
