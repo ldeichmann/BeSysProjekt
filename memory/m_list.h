@@ -53,9 +53,6 @@ mListNode* merge(mListNode* a, mListNode* b);
 //merges every mfree node after root with root if root is mfree
 mListNode* mergeNext(mListNode* root);
 
-//merges all adjactend free Nodes in mList
-void mergeAll(mList* list);
-
 mListNode* findNextFit(mList* list, int length);
 
 #endif /*__M_LIST__*/

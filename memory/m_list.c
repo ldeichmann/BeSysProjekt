@@ -149,22 +149,6 @@ mListNode* mergeNext(mListNode* root) {
 	return root;
 }
 
-// WARNUNG: REDUNDANTER CODE! Brauchen wir diese Methode?
-//merges all adjactend free Nodes in mList
-void mergeAll(mList* list){
-
-	mListNode* out = list->head;
-	while (out->next != NULL) { // while there is an element after out
-		if (out->type == mfree) { // out is free, move it down memory lane
-			while (out->next->type == mfree) {  // merge all the free blocks
-				out = merge(out, out->next);
-			}
-		}
-		else {
-			out = out->next;
-		}
-	}
-}
 
 
 //returns node before next fit, null is no fit
