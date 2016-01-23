@@ -16,7 +16,6 @@ Die einzige Betriebsbedingung ist die in "Getting Started" beschriebene, korrekt
 \subsection{Implementierung}
 
 \subsubsection{processQueue}
-\colorbox{yellow}{irgendwie n Diagramm}
 Die Process Queue die wir in \textit{process\_queue.c} realisiert haben ermöglicht es dem Betriebssystem Prozesse die aktuell, mangels ausreichenden Speichers, nicht ausgeführt werden können in einer Warteschlange zu Speichern und später aufzuführen ohne dafür die Ausführung anderer Prozesse blockieren zu müssen.
 Die Process Queue basiert in ihrer Implementierung auf einer Listenstruktur und stellt die structs processQueue und processQueueNode zur verfügung (siehe \textit{m\_list.h}).
 Desweiteren stellt die Schnittstelle folgende Funtionen zur Verwendung in SimOS zur verfügung:
@@ -33,8 +32,6 @@ Desweiteren stellt die Schnittstelle folgende Funtionen zur Verwendung in SimOS 
 
 
 \subsubsection{mList}
-\colorbox{yellow}{auch irgendwie n Diagramm}
-
 Die Memory list ermöglicht die tatsächliche Speicherverwaltung. Sie basiert auf einer Listenstruktur und beeinhaltet Blöcke die für die Segmente im Arbeitsspeicher stehen, die jeweils frei oder genutzt sein können.
 Zur Realisierung dieser Aufgabe stellt die Implementierung die structs mList und MlistNode, sowie einen enum mType für die zustände der Blöcke bereit.
 Desweiteren stellt die Schnittstelle folgende Funktionen zur Verwendung in SimOS zur verfügung:
@@ -47,7 +44,7 @@ Desweiteren stellt die Schnittstelle folgende Funktionen zur Verwendung in SimOS
 
 \paragraph{void removeProcess(mList* list, PCB\_t* process)} entfernt den process aus der gefragten Liste.
 
-\paragraph{void compact(mList* list)} kompaktiert die gegebene Liste um der ihrer Fragmentierung entgegenzuwirken. \colorbox{yellow}{WANN WIRD GECALLT??}
+\paragraph{void compact(mList* list)} kompaktiert die gegebene Liste um der ihrer Fragmentierung entgegenzuwirken. Die Funktion wird automatisch aufgerufen sobald ein Prozess nicht in den Speicher passt.
 
 \paragraph{mListNode* swapper(mListNode* a, mListNode* b)} eine Hilfsmethode zum Austausch zweier Node innerhalb einer Liste, gibt einen Pointer zur neuen mListNode b zurück. Wird innerhalb von compact genutzt.
 
