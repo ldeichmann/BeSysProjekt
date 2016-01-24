@@ -1,0 +1,5 @@
+\beamer@endinputifotherversion {3.33pt}
+\beamer@sectionintoc {1}{Demo}{3}{0}{1}
+\beamer@sectionintoc {2}{Getroffene Annahmen}{4}{0}{2}
+\beamer@sectionintoc {3}{Funktionsumfang}{5}{0}{3}
+\beamer@sectionintoc {4}{Entwurfsentscheidungen}{6}{0}{4}
