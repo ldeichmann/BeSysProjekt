@@ -1,0 +1,13 @@
+%Entwurfsentscheidungen
+\section{Entwurfsentscheidungen}
+\subsection{Auswahlstrategie für Speicherallozierung}
+Wir entschieden uns für \textbf{First-Fit}, da ohne genaues Wissen über Menge, Größe, und Dauer aller kommenden Prozesse nur sehr schwer zu sagen ist welche Auswahlstrategie tatsächlich zum besten Ergebnis führen wird. First-Fit gibt und allerdings den Vorteil sehr Effizient in der Suche, und leicht zu Implementieren zu sein.
+
+\subsection{Speichermanagement als verkettete Liste}
+Wir entschieden uns zur Implementierung der Speicherverwaltung in Form einer \textbf{Linkedlist}, da wir deutlich weniger des Speichers zur eigentlichen Verwaltung gegenüber einer BitMap aufwenden müssen und da die Suche ebenfalls deutlich effizienter zu gestalten ist.
+
+\subsection{ProcesseManagement als Queue}
+Wir entschieden uns dazu das Management von Prozessen die aktuell nicht in den Speicher passen als eine \textbf{queue} zu implementieren, da sie uns auf sehr simple art und weise ermöglicht Prozesse in der Reihenfolge in der sie ursprünglich aufgerufen wurden auch auszuführen. Dies verhindert das unter bestimmten bedingungen Prozesse niemals ausgeführt werden.
+
+\subsection{Kompaktierungszeitpunkt}
+Unsere Kompaktierung wird jedes mal eingeleitet, wenn ein Prozess \textbf{nicht in den aktuellen Speicher passt}. Wir halten dies für die effizienteste Lösung, da die aufwendige Kompaktierung nur dann ausgeführt wird wenn sie auch tatsächlich gebraucht wird.
