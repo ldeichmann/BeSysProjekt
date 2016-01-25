@@ -19,10 +19,10 @@
 \contentsline {paragraph}{void compact(mList* list)}{5}
 \contentsline {paragraph}{mListNode* swapper(mListNode* a, mListNode* b)}{5}
 \contentsline {paragraph}{mListNode* merge(mListNode* a, mListNode* b)}{5}
-\contentsline {paragraph}{mListNode* findNextFit(mList* list, int length)}{5}
-\contentsline {section}{\numberline {4}Entwurfsentscheidungen}{6}
-\contentsline {subsection}{\numberline {4.1}Auswahlstrategie f\IeC {\"u}r Speicherallozierung}{6}
-\contentsline {subsection}{\numberline {4.2}Speichermanagement als verkettete Liste}{6}
-\contentsline {subsection}{\numberline {4.3}ProcesseManagement als Queue}{6}
-\contentsline {subsection}{\numberline {4.4}Kompaktierungszeitpunkt}{6}
-\contentsline {section}{\numberline {5}Quellen}{7}
+\contentsline {paragraph}{mListNode* findNextFit(mList* list, int length)}{6}
+\contentsline {section}{\numberline {4}Entwurfsentscheidungen}{7}
+\contentsline {subsection}{\numberline {4.1}Auswahlstrategie f\IeC {\"u}r Speicherallozierung}{7}
+\contentsline {subsection}{\numberline {4.2}Speichermanagement als verkettete Liste}{7}
+\contentsline {subsection}{\numberline {4.3}ProcesseManagement als Queue}{7}
+\contentsline {subsection}{\numberline {4.4}Kompaktierungszeitpunkt}{7}
+\contentsline {section}{\numberline {5}Quellen}{8}

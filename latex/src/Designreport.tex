@@ -7,7 +7,6 @@ In unserer Implementierung wird die Annahme getroffen, dass keinem Prozess jemal
 Wir erweiterten die gegebene Implementierung von SimOS im wesentlichen um Funktionen zur Verwaltung des Arbeitsspeichers (realisiert in m\_list.c) und zur temporären Speicherung von Prozessen, die aktuell zu groß für den Arbeitsspeicher sind (realisiert in process\_queue.c).
 Nähere Informationen zu m\_list und process\_queue befinden sich in der Erklärung zur Implementierung.
 Weitere Änderungen waren die Umlagerung von Variablen, um bessere Lokalität zu gewährleisten, und Änderungen, welche die Laufzeit optimieren.
-\colorbox{yellow}{LETZTERES GENAUER}
 
 \subsection{Betriebsbedingungen}
 Die einzige Betriebsbedingung ist die in "Getting Started" beschriebene, korrekt formatierte \textit{processes.txt} Datei.
@@ -33,7 +32,7 @@ Desweiteren stellt die Schnittstelle folgende Funtionen zur Verwendung in SimOS 
 
 \subsubsection{mList}
 Die Memory list ermöglicht die tatsächliche Speicherverwaltung. Sie basiert auf einer Listenstruktur und beeinhaltet Blöcke die für die Segmente im Arbeitsspeicher stehen, die jeweils frei oder genutzt sein können.
-Zur Realisierung dieser Aufgabe stellt die Implementierung die structs mList und MlistNode, sowie einen enum mType für die zustände der Blöcke bereit.
+Zur Realisierung dieser Aufgabe stellt die Implementierung die structs mList und MlistNode, sowie einen enum mType für die zustände der Blöcke bereit. Ausserdem wird durch den Aufbau des struct mListNode die Realisierung von Base- und Limitregistern gestellt.
 Desweiteren stellt die Schnittstelle folgende Funktionen zur Verwendung in SimOS zur verfügung:
 
 \paragraph{mList* makeMList()} erzeugt eine neue MemoryList, alloziert passenden Speicher und gibt einen Pointer auf die Liste zurück.
