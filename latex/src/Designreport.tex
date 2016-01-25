@@ -16,8 +16,8 @@ Die einzige Betriebsbedingung ist die in "Getting Started" beschriebene, korrekt
 \subsection{Implementierung}
 
 \subsubsection{processQueue}
-Die Process Queue die wir in \textit{process\_queue.c} realisiert haben ermöglicht es dem Betriebssystem Prozesse die aktuell, mangels ausreichenden Speichers, nicht ausgeführt werden können in einer Warteschlange zu Speichern und später aufzuführen ohne dafür die Ausführung anderer Prozesse blockieren zu müssen.
-Die Process Queue basiert in ihrer Implementierung auf einer Listenstruktur und stellt die structs processQueue und processQueueNode zur verfügung (siehe \textit{m\_list.h}).
+Die Process Queue, die wir in \textit{process\_queue.c} realisiert haben, ermöglicht es dem Betriebssystem, Prozesse, die aktuell, mangels ausreichenden Speichers, nicht ausgeführt werden können, in einer Warteschlange zu Speichern und später aufzuführen, ohne dafür die Ausführung anderer Prozesse blockieren zu müssen.
+Die Process Queue basiert in ihrer Implementierung auf einer Listenstruktur und stellt die structs processQueue und processQueueNode zur Verfügung (siehe \textit{m\_list.h}).
 Desweiteren stellt die Schnittstelle folgende Funtionen zur Verwendung in SimOS zur verfügung:
 
 \paragraph{processQueue* makeProcessQueue()} erzeugt eine neue processQueue, alloziert passenden Speicher und gibt einen Pointer auf die Queue zurück.
@@ -32,7 +32,7 @@ Desweiteren stellt die Schnittstelle folgende Funtionen zur Verwendung in SimOS 
 
 
 \subsubsection{mList}
-Die Memory list ermöglicht die tatsächliche Speicherverwaltung. Sie basiert auf einer Listenstruktur und beeinhaltet Blöcke die für die Segmente im Arbeitsspeicher stehen, die jeweils frei oder genutzt sein können.
+Die Memory list ermöglicht die tatsächliche Speicherverwaltung. Sie basiert auf einer Listenstruktur und beeinhaltet Blöcke, die für die Segmente im Arbeitsspeicher stehen, die jeweils frei oder genutzt sein können.
 Zur Realisierung dieser Aufgabe stellt die Implementierung die structs mList und MlistNode, sowie einen enum mType für die zustände der Blöcke bereit.
 Desweiteren stellt die Schnittstelle folgende Funktionen zur Verwendung in SimOS zur verfügung:
 
