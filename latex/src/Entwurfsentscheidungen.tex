@@ -4,7 +4,7 @@
 Wir entschieden uns für \textbf{First-Fit}, da ohne genaues Wissen über Menge, Größe, und Dauer aller kommenden Prozesse nur sehr schwer zu sagen ist, welche Auswahlstrategie tatsächlich zum besten Ergebnis führen wird. First-Fit gibt uns allerdings den Vorteil, sehr Effizient in der Suche und leicht zu Implementieren zu sein.
 
 \subsection{Speichermanagement als verkettete Liste}
-Wir entschieden uns zur Implementierung der Speicherverwaltung in Form einer \textbf{Linked list}, da wir deutlich weniger des Speichers zur eigentlichen Verwaltung gegenüber einer BitMap aufwenden müssen und die Suche ebenfalls deutlich effizienter zu gestalten ist. Die Knoten der Liste enthalten als Informationen einen Start- sowie einen Längenwert, welche für die effiziente Nutzung des Base- und Limitregisters der CPU gedacht sind.
+Wir entschieden uns zur Implementierung der Speicherverwaltung in Form einer \textbf{Linked list}, da wir deutlich weniger des Speichers zur eigentlichen Verwaltung gegenüber einer BitMap aufwenden müssen und die Suche ebenfalls deutlich effizienter zu gestalten ist.
 
 \subsection{ProcesseManagement als Queue}
 Wir entschieden uns dazu, das Management von Prozessen, die aktuell nicht in den Speicher passen, als eine \textbf{queue} zu implementieren, da sie uns auf sehr simple Art und Weise ermöglicht, Prozesse in der Reihenfolge, in der sie ursprünglich aufgerufen wurden, auch auszuführen. Dies verhindert, dass unter bestimmten Bedingungen Prozesse niemals ausgeführt werden.
