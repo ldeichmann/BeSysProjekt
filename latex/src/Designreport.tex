@@ -32,7 +32,7 @@ Desweiteren stellt die Schnittstelle folgende Funtionen zur Verwendung in SimOS 
 
 \subsubsection{mList}
 
-Die Memory list ermöglicht die tatsächliche Speicherverwaltung. Sie basiert auf einer Listenstruktur und beeinhaltet Blöcke die für die Segmente im Arbeitsspeicher stehen, die jeweils frei oder genutzt sein können.
+Die Memory list ermöglicht die tatsächliche Speicherverwaltung. Sie basiert auf einer Listenstruktur und beeinhaltet Blöcke, die für die Segmente im Arbeitsspeicher stehen, die jeweils frei oder genutzt sein können.
 Zur Realisierung dieser Aufgabe stellt die Implementierung die structs mList und MlistNode, sowie einen enum mType für die zustände der Blöcke bereit. Die MlistNode enthält einen Start- sowie einen Längenwert, welche für die effiziente Nutzung des Base- und Limitregisters der CPU gedacht sind.
 Desweiteren stellt die Schnittstelle folgende Funktionen zur Verwendung in SimOS zur verfügung:
 
